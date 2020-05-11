@@ -1,0 +1,30 @@
+{
+  "id": "1714675",
+  "name": "insurance",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "10268551",
+      "name": "家庭管理",
+      "font_class": "jiatingguanli",
+      "unicode": "e679",
+      "unicode_decimal": 59001
+    },
+    {
+      "icon_id": "12435114",
+      "name": "个人中心",
+      "font_class": "gerenzhongxin",
+      "unicode": "e72a",
+      "unicode_decimal": 59178
+    },
+    {
+      "icon_id": "12592991",
+      "name": "奖杯",
+      "font_class": "jiangbei",
+      "unicode": "e6ea",
+      "unicode_decimal": 59114
+    }
+  ]
+}

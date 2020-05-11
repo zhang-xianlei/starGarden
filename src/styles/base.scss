@@ -1,0 +1,37 @@
+html,
+body {
+    font-family: "Helvetica Neue", Helvetica, STHeiTi Light, sans-serif;
+    color: #808080;
+    font-size: .14rem;
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    color: #333;
+    text-decoration: none;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.row-flex {
+    display: flex;
+}
+
+.column-flex {
+    display: flex;
+    flex-direction: column;
+}
+
+.clear:after {
+    content: ' ';
+    display: block;
+    clear: both;
+
+}
+
+.content-wrapper {
+    margin: .1rem;
+}

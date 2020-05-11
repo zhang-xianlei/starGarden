@@ -1,0 +1,11 @@
+src/styles/fonts/
+/.eslintrc*
+node_modules*
+dist
+*.svg
+*.ico
+*.json
+.gitignore
+*.md
+*.log
+*.lock

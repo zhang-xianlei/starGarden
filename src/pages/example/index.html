@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title><%= htmlWebpackPlugin.options.title %></title>
+</head>
+<script>
+    ;
+    (function () {
+        // 设计稿宽度 px
+        var designWidth = 375
+        // rem 基准字号 px
+        var baseFontSize = 100
+        // 最大适配宽度 px
+        var maxAdaptWidth = 768
+
+        var adaptDevice = function () {
+            var deviceWidth = Math.max(document.documentElement.clientWidth, window.innerWidth) || screen
+                .availWidth
+            deviceWidth = deviceWidth > maxAdaptWidth ? maxAdaptWidth : deviceWidth
+            var scale = deviceWidth / designWidth
+            var adaptRootFontSize = baseFontSize * scale
+            document.querySelector('html').style.fontSize = adaptRootFontSize + 'px'
+        }
+
+        var timer = 0
+        window.addEventListener('resize', function () {
+            if (timer) {
+                clearTimeout(timer)
+                timer = 0
+            }
+
+            timer = setTimeout(function () {
+                adaptDevice()
+            }, 0)
+        })
+
+        adaptDevice()
+        setTimeout(adaptDevice, 0)
+    }())
+
+</script>
+
+<body>
+    <div id="app"></div>
+</body>
+
+</html>
