@@ -15,6 +15,8 @@ const smp = new SpeedMeasurePlugin();
 
 const path = require("path");
 const resolve = url => path.resolve(__dirname, "..", url);
+const os = require('os');
+const workers = os.cpus().length - 1;
 
 const {
     pageEntries
@@ -61,6 +63,12 @@ const generateConfig = env => {
     // 将需要的 Loader 和 Plugin 单独声明
 
     let scriptLoader = [{
+        loader: "thread-loader",
+        options: {
+            workers,
+
+        }
+    }, {
         loader: "babel-loader"
     }];
 
