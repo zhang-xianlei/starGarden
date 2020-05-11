@@ -30,8 +30,9 @@ const generateEntriesAndOut = (pageEntries, env) => {
             entryObj[item.jsout] = jsEntries
             HtmlWebpackPluginArr.push(
                 new HtmlWebpackPlugin({
-                    title: item.jsout === "index" ? "双保通" : item.jsout,
+                    title: item.jsout,
                     filename: item.htmlout,
+                    favicon: resolve('src/assets/favicon/favicon.ico'),
                     template: resolve(item.htmlsrc),
                     chunks: [item.jsout, "vendor", "element"], // 设置注入 html 具体的js文件
                     minify: {
@@ -69,8 +70,8 @@ const generateConfig = env => {
     ];
 
     let cssExtractLoader = [{
-            loader: MiniCssExtractPlugin.loader
-        },
+        loader: MiniCssExtractPlugin.loader
+    },
         // 'style-loader',
         // 'vue-style-loader', use these two loaders leading to module build failed, detais in https://github.com/webpack-contrib/mini-css-extract-plugin/issues/173
         "css-loader",
@@ -89,28 +90,28 @@ const generateConfig = env => {
     }];
 
     let imageLoader = [{
-            loader: "file-loader",
-            options: {
-                name: "[name]-[hash:5].min.[ext]",
-                limit: 10000,
-                outputPath: "images/"
-            }
-        },
-        {
-            // mac 环境实用会报错，因为缺少个依赖包 mozjpeg，并且国内环境安装不了。所以 mac 环境不能使用图片压缩 https://myclusterbox.com/view/1566
-            loader: "image-webpack-loader",
-            options: {
-                mozjpeg: {
-                    progressive: true,
-                    quality: 50 // 压缩率
-                },
-                // 压缩 png 图片
-                pngquant: {
-                    quality: [0.65, 0.9],
-                    speed: 4
-                }
+        loader: "file-loader",
+        options: {
+            name: "[name]-[hash:5].min.[ext]",
+            limit: 10000,
+            outputPath: "images/"
+        }
+    },
+    {
+        // mac 环境实用会报错，因为缺少个依赖包 mozjpeg，并且国内环境安装不了。所以 mac 环境不能使用图片压缩 https://myclusterbox.com/view/1566
+        loader: "image-webpack-loader",
+        options: {
+            mozjpeg: {
+                progressive: true,
+                quality: 50 // 压缩率
+            },
+            // 压缩 png 图片
+            pngquant: {
+                quality: [0.65, 0.9],
+                speed: 4
             }
         }
+    }
     ];
 
     let styleLoader = env === "production" ? cssExtractLoader : cssLoader;
@@ -136,39 +137,39 @@ const generateConfig = env => {
         },
         module: {
             rules: [{
-                    test: /\.(js|vue)$/,
-                    loader: "eslint-loader",
-                    enforce: "pre",
-                    include: [resolve("src")],
-                    options: {
-                        fix: true,
-                        outputReport: {
-                            formatter: EslintFriendlyFormatter
-                        }
+                test: /\.(js|vue)$/,
+                loader: "eslint-loader",
+                enforce: "pre",
+                include: [resolve("src")],
+                options: {
+                    fix: true,
+                    outputReport: {
+                        formatter: EslintFriendlyFormatter
                     }
-                    // include: [resolve('src'), resolve('test')],
-                },
-                {
-                    test: /\.vue$/,
-                    use: ["vue-loader"]
-                },
-                {
-                    test: /\.js$/,
-                    exclude: /(node_modules)/,
-                    use: scriptLoader
-                },
-                {
-                    test: /\.(sa|sc|c)ss$/,
-                    use: styleLoader
-                },
-                {
-                    test: /\.(eot|woff2?|ttf|svg)$/,
-                    use: fontLoader
-                },
-                {
-                    test: /\.(jpeg|png|jpg|gif)$/,
-                    use: imageLoader
                 }
+                // include: [resolve('src'), resolve('test')],
+            },
+            {
+                test: /\.vue$/,
+                use: ["vue-loader"]
+            },
+            {
+                test: /\.js$/,
+                exclude: /(node_modules)/,
+                use: scriptLoader
+            },
+            {
+                test: /\.(sa|sc|c)ss$/,
+                use: styleLoader
+            },
+            {
+                test: /\.(eot|woff2?|ttf|svg)$/,
+                use: fontLoader
+            },
+            {
+                test: /\.(jpeg|png|jpg|gif)$/,
+                use: imageLoader
+            }
             ]
         },
         plugins: [

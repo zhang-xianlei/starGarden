@@ -1,10 +1,8 @@
 <template>
     <div class="app">
-        <Header/>
-        <div class="view">
-           hello world
-        </div>
-        <FooterNav/>
+        <Header />
+        <div class="view">hello world</div>
+        <FooterNav />
     </div>
 </template>
 <script>
@@ -20,8 +18,7 @@ export default {
     data () {
         return {}
     },
-    computed: {
-    },
+    computed: {}
 }
 </script>
 
@@ -32,8 +29,9 @@ body {
 }
 .view {
     position: absolute;
-    width: 100%;
+    width: calc(100% - 0.16rem);
     top: 0.5rem;
+    left: 0.08rem;
     bottom: 0.585rem;
     overflow-x: hidden;
 }

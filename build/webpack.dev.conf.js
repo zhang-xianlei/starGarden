@@ -20,7 +20,7 @@ module.exports = {
         proxy: {
             // 用法详情举例  https://segmentfault.com/a/1190000016314976
             "/api": {
-                target: "http://www.shuangbaotong.com:8080",
+                target: "/",
                 changeOrigin: true,
                 logLevel: "debug",
                 pathRewrite: {

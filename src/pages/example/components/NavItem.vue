@@ -1,11 +1,11 @@
 <template>
     <div class="nav-item">
-        <router-link :to="pathStr" :class="isActive && 'active'">
+        <div :class="isActive && 'active'">
             <div class="item-icon">
                 <span class="iconfont" :class="iconClass"></span>
             </div>
             <div class="itme-title">{{ itemName }}</div>
-        </router-link>
+        </div>
     </div>
 </template>
 <script>

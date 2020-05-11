@@ -6,28 +6,25 @@
             :itemName="item.itemName"
             :pathStr="item.pathStr"
             :iconClass="item.iconClass"
-            :curNav="curNav"
         />
     </div>
 </template>
 <script>
 import NavItem from './NavItem'
 
-import { mapState } from 'vuex'
-
 const ITEMS_DATA = [
     {
-        iconClass: 'icon-jiatingguanli',
+        iconClass: 'icon-bijiben',
         pathStr: '/family',
-        itemName: '我家保单'
+        itemName: '首页'
     },
     {
-        iconClass: 'icon-jiangbei',
+        iconClass: 'icon-heiban',
         pathStr: '/familyBills',
-        itemName: '我家账本'
+        itemName: '活动中心'
     },
     {
-        iconClass: 'icon-gerenzhongxin',
+        iconClass: 'icon-biyesheng',
         pathStr: '/userCenter',
         itemName: '我的'
     }
@@ -42,11 +39,7 @@ export default {
             ITEMS_DATA
         }
     },
-    computed: {
-        ...mapState({
-            curNav: state => state.curNav
-        })
-    }
+    computed: {}
 }
 </script>
 <style lang="scss" scoped>

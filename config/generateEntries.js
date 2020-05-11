@@ -21,8 +21,8 @@ module.exports = {
         // 拍平嵌套数组
         const flatten = arr =>
             Array.isArray(arr) ?
-            arr.reduce((acc, cur) => acc.concat(flatten(cur)), []) :
-            arr;
+                arr.reduce((acc, cur) => acc.concat(flatten(cur)), []) :
+                arr;
 
         // 识别正则字符串的正则
         const reForReStr = /^\/(.*)\/$/;
@@ -31,8 +31,8 @@ module.exports = {
         const pagePathRe = reForReStr.test(params) ? // 部分匹配
             RegExp(reForReStr.exec(params)[1], "i") :
             params ? // 完全匹配
-            RegExp(`^${params}$`, "i") : // 全部匹配
-            RegExp("", "i");
+                RegExp(`^${params}$`, "i") : // 全部匹配
+                RegExp("", "i");
 
         // 递归寻找 html 文件
         const recursiveFindHtml = pagePathArr => {
@@ -68,12 +68,12 @@ module.exports = {
                     pagePathArr,
                     htmlArr
                 }) =>
-                htmlArr
-                .map(html => ({
-                    pagePathArr,
-                    html
-                }))
-                .concat(acc),
+                    htmlArr
+                        .map(html => ({
+                            pagePathArr,
+                            html
+                        }))
+                        .concat(acc),
                 []
             )
             .map(({

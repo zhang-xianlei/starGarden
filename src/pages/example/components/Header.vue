@@ -26,14 +26,13 @@ export default {
     position: relative;
     font-size: 0.18rem;
     font-weight: bold;
-    color: #fff;
+    color: #ccc;
     height: 0.5rem;
     line-height: 0.5rem;
-    background-color: #f56c6c;
     text-align: center;
     .go-back {
         position: absolute;
-        color: #fff;
+        color: #ccc;
         left: 0.2rem;
         top: 50%;
         transform: translate(0, -50%);
