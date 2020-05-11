@@ -7,17 +7,21 @@ const VueLoaderPlugin = require("vue-loader/lib/plugin");
 const {
     CleanWebpackPlugin
 } = require("clean-webpack-plugin");
+const BundleAnalyzer = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
+const EslintFriendlyFormatter = require("eslint-friendly-formatter");
+const SpeedMeasurePlugin = require('speed-measure-webpack-plugin');
+
+const smp = new SpeedMeasurePlugin();
+
+const path = require("path");
+const resolve = url => path.resolve(__dirname, "..", url);
+
 const {
     pageEntries
 } = require("../config/generateEntries");
-const BundleAnalyzer = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
-const EslintFriendlyFormatter = require("eslint-friendly-formatter");
-
-const path = require("path");
-
 const productionConfig = require("./webpack.prod.conf");
 const developmentConfig = require("./webpack.dev.conf");
-const resolve = url => path.resolve(__dirname, "..", url);
+
 const env = process.env.NODE_ENV;
 const PAGE_NAME = process.env.npm_config_pageName || '';
 
@@ -193,5 +197,5 @@ const generateConfig = env => {
 module.exports = () => {
     let env = process.env.NODE_ENV;
     let config = env === "production" ? productionConfig : developmentConfig;
-    return merge(generateConfig(env), config);
+    return env === "production" ? merge(generateConfig(env), config) : smp.wrap(merge(generateConfig(env), config));
 };
