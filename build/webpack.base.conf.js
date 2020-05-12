@@ -15,8 +15,8 @@ const smp = new SpeedMeasurePlugin();
 
 const path = require("path");
 const resolve = url => path.resolve(__dirname, "..", url);
-const os = require('os');
-const workers = os.cpus().length - 1;
+// const os = require('os');
+// const workers = os.cpus().length - 1;
 
 const {
     pageEntries
@@ -24,7 +24,6 @@ const {
 const productionConfig = require("./webpack.prod.conf");
 const developmentConfig = require("./webpack.dev.conf");
 
-const env = process.env.NODE_ENV;
 const PAGE_NAME = process.env.npm_config_pageName || '';
 
 const generateEntriesAndOut = (pageEntries, env) => {
@@ -63,12 +62,6 @@ const generateConfig = env => {
     // 将需要的 Loader 和 Plugin 单独声明
 
     let scriptLoader = [{
-        loader: "thread-loader",
-        options: {
-            workers,
-
-        }
-    }, {
         loader: "babel-loader"
     }];
 
@@ -205,5 +198,6 @@ const generateConfig = env => {
 module.exports = () => {
     let env = process.env.NODE_ENV;
     let config = env === "development" ? developmentConfig : productionConfig;
-    return env === "production" ? merge(generateConfig(env), config) : smp.wrap(merge(generateConfig(env), config));
+    console.log(JSON.stringify(config))
+    return env === "development" ? smp.wrap(merge(generateConfig(env), config)) : merge(generateConfig(env), config);
 };
