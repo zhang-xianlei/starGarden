@@ -9,16 +9,26 @@ module.exports = {
         splitChunks: {
             chunks: 'all',
             cacheGroups: { //打包成具体的js文件 以便在 HtmlWebpackPlugin 中的 chunks 属性中添加，注入到相应的页面中
+                vue: {
+                    name: 'vue',
+                    priority: 1,
+                    test: /[\\/]node_modules[\\/]vue[\\/]/
+                },
+                element: {  // 单独将 elementUI 拆包
+                    name: 'element',
+                    priority: 2,
+                    test: /[\\/]node_modules[\\/]element-ui[\\/]/
+                },
+                vueRouter: {
+                    name: 'vue-router',
+                    priority: 2,
+                    test: /[\\/]node_modules[\\/]vue-router[\\/]/
+                },
                 vendors: {
                     test: /[\\/]node_modules[\\/]/,
                     name: 'vendor',
                     chunks: 'all'
                 },
-                element: {  // 单独将 elementUI 拆包
-                    name: 'element',
-                    priority: 15,
-                    test: /[\\/]node_modules[\\/]element-ui[\\/]/
-                }
             }
         }
     },

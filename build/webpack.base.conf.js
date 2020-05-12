@@ -40,7 +40,7 @@ const generateEntriesAndOut = (pageEntries, env) => {
                     filename: item.htmlout,
                     favicon: resolve('src/assets/favicon/favicon.ico'),
                     template: resolve(item.htmlsrc),
-                    chunks: [item.jsout, "vendor", "element"], // 设置注入 html 具体的js文件
+                    chunks: [item.jsout, "vendor", "element", "vue", 'vue-router'], // 设置注入 html 具体的js文件
                     minify: {
                         collapseWhitespace: true
                     }
@@ -126,12 +126,12 @@ const generateConfig = env => {
     }
     ];
 
-    let styleLoader = env === "production" ? cssExtractLoader : cssLoader;
+    let styleLoader = env === "development" ? cssLoader : cssExtractLoader;
 
     let options = {
         entry: entryAndOutInfo.entryObj,
         output: {
-            publicPath: env === "production" ? "./" : "/",
+            publicPath: env === "development" ? "/" : "./",
             path: resolve("dist"),
             filename: "[name]-[hash:5].bundle.js",
             chunkFilename: "[name]-[hash:5].chunk.js"
@@ -204,6 +204,6 @@ const generateConfig = env => {
 
 module.exports = () => {
     let env = process.env.NODE_ENV;
-    let config = env === "production" ? productionConfig : developmentConfig;
+    let config = env === "development" ? developmentConfig : productionConfig;
     return env === "production" ? merge(generateConfig(env), config) : smp.wrap(merge(generateConfig(env), config));
 };
