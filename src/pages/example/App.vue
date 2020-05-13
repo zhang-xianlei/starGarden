@@ -5,6 +5,7 @@
             <h4>hello world</h4>
             <div>this is a paragraph</div>
             <div>this is a paragraph</div>
+            <Sign />
         </div>
         <FooterNav />
     </div>
@@ -12,12 +13,13 @@
 <script>
 import Header from './components/Header'
 import FooterNav from './components/FooterNav'
-
+import Sign from './components/login/Sign'
 export default {
     name: 'App',
     components: {
         Header,
-        FooterNav
+        FooterNav,
+        Sign
     },
     data () {
         return {}

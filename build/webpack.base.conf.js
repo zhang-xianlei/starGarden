@@ -21,6 +21,7 @@ const workers = os.cpus().length - 1;
 const {
     pageEntries
 } = require("../config/generateEntries");
+const vueLoader = require('../config/vueLoader.conf.js');
 const productionConfig = require("./webpack.prod.conf");
 const developmentConfig = require("./webpack.dev.conf");
 
@@ -59,17 +60,19 @@ const generateEntriesAndOut = (pageEntries, env) => {
 const generateConfig = env => {
     const entryAndOutInfo = generateEntriesAndOut(pageEntries(PAGE_NAME), env);
     console.log(`**************${env}*************`);
+    console.log(JSON.stringify(vueLoader.cssLoaders({
+        sourceMap: env === "development",
+        extract: !env === "development",
+        debug: env === "development"
+    })))
     // 将需要的 Loader 和 Plugin 单独声明
-
     let scriptLoader = [{
         loader: "thread-loader",
         options: {
             workers,
             name: 'thread-expensive'
         }
-    }, {
-        loader: "babel-loader"
-    }];
+    }, "cache-loader", "babel-loader"];
 
     // 开发环境：页内样式嵌入
     let cssLoader = [
@@ -168,7 +171,21 @@ const generateConfig = env => {
                         workers,
                         name: 'thread-expensive'
                     }
-                }, "vue-loader"]
+                }, "cache-loader", {
+                    loader: "vue-loader",
+                    options: {
+                        loaders: vueLoader.cssLoaders({
+                            // CSS Sourcemaps off by default because relative paths are "buggy"
+                            // with this option, according to the CSS-Loader README
+                            // (https://github.com/webpack/css-loader#sourcemaps)
+                            // In our experience, they generally work as expected,
+                            // just be aware of this issue when enabling this option.
+                            sourceMap: !env === "development",
+                            extract: env === "development",
+                            debug: !env === "development"
+                        })
+                    }
+                }]
             },
             {
                 test: /\.js$/,
