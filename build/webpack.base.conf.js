@@ -21,7 +21,7 @@ const workers = os.cpus().length - 1;
 const {
     pageEntries
 } = require("../config/generateEntries");
-const vueLoader = require('../config/vueLoader.conf.js');
+// const vueLoader = require('../config/vueLoader.conf.js');
 const productionConfig = require("./webpack.prod.conf");
 const developmentConfig = require("./webpack.dev.conf");
 
@@ -60,11 +60,6 @@ const generateEntriesAndOut = (pageEntries, env) => {
 const generateConfig = env => {
     const entryAndOutInfo = generateEntriesAndOut(pageEntries(PAGE_NAME), env);
     console.log(`**************${env}*************`);
-    console.log(JSON.stringify(vueLoader.cssLoaders({
-        sourceMap: env === "development",
-        extract: !env === "development",
-        debug: env === "development"
-    })))
     // 将需要的 Loader 和 Plugin 单独声明
     let scriptLoader = [{
         loader: "thread-loader",
@@ -77,15 +72,14 @@ const generateConfig = env => {
     // 开发环境：页内样式嵌入
     let cssLoader = [
         "vue-style-loader",
-        "style-loader",
         "css-loader",
         "postcss-loader", // 使用 postcss 为 css 加上浏览器前缀
         "sass-loader" // 使用 sass-loader 将 scss 转为 css
     ];
 
     let cssExtractLoader = [{
-        loader: MiniCssExtractPlugin.loader
-    },
+            loader: MiniCssExtractPlugin.loader
+        },
         // 'style-loader',
         // 'vue-style-loader', use these two loaders leading to module build failed, detais in https://github.com/webpack-contrib/mini-css-extract-plugin/issues/173
         "css-loader",
@@ -104,28 +98,28 @@ const generateConfig = env => {
     }];
 
     let imageLoader = [{
-        loader: "file-loader",
-        options: {
-            name: "[name]-[hash:5].min.[ext]",
-            limit: 10000,
-            outputPath: "images/"
-        }
-    },
-    {
-        // mac 环境实用会报错，因为缺少个依赖包 mozjpeg，并且国内环境安装不了。所以 mac 环境不能使用图片压缩 https://myclusterbox.com/view/1566
-        loader: "image-webpack-loader",
-        options: {
-            mozjpeg: {
-                progressive: true,
-                quality: 50 // 压缩率
-            },
-            // 压缩 png 图片
-            pngquant: {
-                quality: [0.65, 0.9],
-                speed: 4
+            loader: "file-loader",
+            options: {
+                name: "[name]-[hash:5].min.[ext]",
+                limit: 10000,
+                outputPath: "images/"
+            }
+        },
+        {
+            // mac 环境实用会报错，因为缺少个依赖包 mozjpeg，并且国内环境安装不了。所以 mac 环境不能使用图片压缩 https://myclusterbox.com/view/1566
+            loader: "image-webpack-loader",
+            options: {
+                mozjpeg: {
+                    progressive: true,
+                    quality: 50 // 压缩率
+                },
+                // 压缩 png 图片
+                pngquant: {
+                    quality: [0.65, 0.9],
+                    speed: 4
+                }
             }
         }
-    }
     ];
 
     let styleLoader = env === "development" ? cssLoader : cssExtractLoader;
@@ -151,59 +145,59 @@ const generateConfig = env => {
         },
         module: {
             rules: [{
-                test: /\.(js|vue)$/,
-                loader: "eslint-loader",
-                enforce: "pre",
-                include: [resolve("src")],
-                options: {
-                    fix: true,
-                    outputReport: {
-                        formatter: EslintFriendlyFormatter
+                    test: /\.(js|vue)$/,
+                    loader: "eslint-loader",
+                    enforce: "pre",
+                    include: [resolve("src")],
+                    options: {
+                        fix: true,
+                        outputReport: {
+                            formatter: EslintFriendlyFormatter
+                        }
                     }
+                    // include: [resolve('src'), resolve('test')],
+                },
+                {
+                    test: /\.vue$/,
+                    use: [{
+                        loader: "thread-loader",
+                        options: {
+                            workers,
+                            name: 'thread-expensive'
+                        }
+                    }, "cache-loader", {
+                        loader: "vue-loader",
+                        /* options: {
+                            loaders: vueLoader.cssLoaders({
+                                // CSS Sourcemaps off by default because relative paths are "buggy"
+                                // with this option, according to the CSS-Loader README
+                                // (https://github.com/webpack/css-loader#sourcemaps)
+                                // In our experience, they generally work as expected,
+                                // just be aware of this issue when enabling this option.
+                                sourceMap: !env === "development",
+                                extract: env === "development",
+                                debug: !env === "development"
+                            })
+                        } */
+                    }]
+                },
+                {
+                    test: /\.js$/,
+                    exclude: /(node_modules)/,
+                    use: scriptLoader
+                },
+                {
+                    test: /\.(sa|sc|c)ss$/,
+                    use: styleLoader
+                },
+                {
+                    test: /\.(eot|woff2?|ttf|svg)$/,
+                    use: fontLoader
+                },
+                {
+                    test: /\.(jpeg|png|jpg|gif)$/,
+                    use: imageLoader
                 }
-                // include: [resolve('src'), resolve('test')],
-            },
-            {
-                test: /\.vue$/,
-                use: [{
-                    loader: "thread-loader",
-                    options: {
-                        workers,
-                        name: 'thread-expensive'
-                    }
-                }, "cache-loader", {
-                    loader: "vue-loader",
-                    options: {
-                        loaders: vueLoader.cssLoaders({
-                            // CSS Sourcemaps off by default because relative paths are "buggy"
-                            // with this option, according to the CSS-Loader README
-                            // (https://github.com/webpack/css-loader#sourcemaps)
-                            // In our experience, they generally work as expected,
-                            // just be aware of this issue when enabling this option.
-                            sourceMap: !env === "development",
-                            extract: env === "development",
-                            debug: !env === "development"
-                        })
-                    }
-                }]
-            },
-            {
-                test: /\.js$/,
-                exclude: /(node_modules)/,
-                use: scriptLoader
-            },
-            {
-                test: /\.(sa|sc|c)ss$/,
-                use: styleLoader
-            },
-            {
-                test: /\.(eot|woff2?|ttf|svg)$/,
-                use: fontLoader
-            },
-            {
-                test: /\.(jpeg|png|jpg|gif)$/,
-                use: imageLoader
-            }
             ]
         },
         plugins: [
