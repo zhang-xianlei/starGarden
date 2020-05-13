@@ -4,25 +4,26 @@
         <div class="view">
             <h4>hello world</h4>
             <div>this is a paragraph</div>
+            <div>this is a paragraph</div>
         </div>
         <FooterNav />
     </div>
 </template>
 <script>
-import Header from "./components/Header";
-import FooterNav from "./components/FooterNav";
+import Header from './components/Header'
+import FooterNav from './components/FooterNav'
 
 export default {
-    name: "App",
+    name: 'App',
     components: {
         Header,
         FooterNav
     },
-    data() {
-        return {};
+    data () {
+        return {}
     },
     computed: {}
-};
+}
 </script>
 
 <style lang="scss">
