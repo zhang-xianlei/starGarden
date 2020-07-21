@@ -12,7 +12,6 @@ module.exports = {
         // publicPath: '' 此路径的打包文件可在浏览器中访问。 默认为 '/' 可以更改，但确保以斜杠 '/' 开头和结尾
         contentBase: path.join(__dirname, "../dist/"), // 告诉服务器从该目录中提供内容
         openPage: `${PAGE_NAME}.html`,
-        disableHostCheck: true,
         host: "0.0.0.0",
         port: 80,
         hot: true,

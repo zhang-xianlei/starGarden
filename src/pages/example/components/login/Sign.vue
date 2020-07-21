@@ -7,6 +7,7 @@
 
 <script>
 import userPortrait from '@assets/default-portrait.png'
+import '@styles/base.scss'
 export default {
     data () {
         return {

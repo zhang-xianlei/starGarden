@@ -72,9 +72,19 @@ const generateConfig = env => {
     // 开发环境：页内样式嵌入
     let cssLoader = [
         "vue-style-loader",
-        "css-loader",
+        {
+            loader: "css-loader",
+            options: {
+                sourceMap: env === 'development'
+            }
+        },  
         "postcss-loader", // 使用 postcss 为 css 加上浏览器前缀
-        "sass-loader" // 使用 sass-loader 将 scss 转为 css
+        {
+            loader: "sass-loader", // 使用 sass-loader 将 scss 转为 css
+            options: {
+                sourceMap: env === 'development'
+            }
+        }
     ];
 
     let cssExtractLoader = [{
@@ -155,7 +165,6 @@ const generateConfig = env => {
                             formatter: EslintFriendlyFormatter
                         }
                     }
-                    // include: [resolve('src'), resolve('test')],
                 },
                 {
                     test: /\.vue$/,
@@ -165,21 +174,7 @@ const generateConfig = env => {
                             workers,
                             name: 'thread-expensive'
                         }
-                    }, "cache-loader", {
-                        loader: "vue-loader",
-                        /* options: {
-                            loaders: vueLoader.cssLoaders({
-                                // CSS Sourcemaps off by default because relative paths are "buggy"
-                                // with this option, according to the CSS-Loader README
-                                // (https://github.com/webpack/css-loader#sourcemaps)
-                                // In our experience, they generally work as expected,
-                                // just be aware of this issue when enabling this option.
-                                sourceMap: !env === "development",
-                                extract: env === "development",
-                                debug: !env === "development"
-                            })
-                        } */
-                    }]
+                    }, "cache-loader", "vue-loader"]
                 },
                 {
                     test: /\.js$/,
