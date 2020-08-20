@@ -75,14 +75,14 @@ const generateConfig = env => {
         {
             loader: "css-loader",
             options: {
-                sourceMap: env === 'development'
+                sourceMap: true
             }
-        },  
+        },
         "postcss-loader", // 使用 postcss 为 css 加上浏览器前缀
         {
             loader: "sass-loader", // 使用 sass-loader 将 scss 转为 css
             options: {
-                sourceMap: env === 'development'
+                sourceMap: true
             }
         }
     ];
