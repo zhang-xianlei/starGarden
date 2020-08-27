@@ -15,31 +15,31 @@ import NavItem from './NavItem'
 const ITEMS_DATA = [
     {
         iconClass: 'icon-bijiben',
-        pathStr: '/family',
-        itemName: '首页'
+        pathStr: '/home',
+        itemName: '首页',
     },
     {
         iconClass: 'icon-heiban',
-        pathStr: '/familyBills',
-        itemName: '活动中心'
+        pathStr: '/activity',
+        itemName: '活动中心',
     },
     {
         iconClass: 'icon-biyesheng',
         pathStr: '/userCenter',
-        itemName: '我的'
-    }
+        itemName: '我的',
+    },
 ]
 export default {
     name: 'FooterNav',
     components: {
-        NavItem
+        NavItem,
     },
     data () {
         return {
-            ITEMS_DATA
+            ITEMS_DATA,
         }
     },
-    computed: {}
+    computed: {},
 }
 </script>
 <style lang="scss" scoped>

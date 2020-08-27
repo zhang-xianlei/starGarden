@@ -1,11 +1,11 @@
 <template>
     <div class="nav-item">
-        <div :class="isActive && 'active'">
+        <router-link :to="pathStr" :class="isActive && 'active'">
             <div class="item-icon">
                 <span class="iconfont" :class="iconClass"></span>
             </div>
             <div class="itme-title">{{ itemName }}</div>
-        </div>
+        </router-link>
     </div>
 </template>
 <script>
@@ -15,21 +15,21 @@ export default {
     props: {
         iconClass: {
             required: true,
-            type: String
+            type: String,
         },
         itemName: {
             required: true,
-            type: String
+            type: String,
         },
         pathStr: {
             required: true,
-            type: String
+            type: String,
         },
         curNav: {
             required: false,
             type: String,
-            default: ''
-        }
+            default: '',
+        },
     },
     data () {
         return {}
@@ -37,8 +37,8 @@ export default {
     computed: {
         isActive: function () {
             return this.pathStr === `/${this.curNav}`
-        }
-    }
+        },
+    },
 }
 </script>
 <style lang="scss" scoped>
