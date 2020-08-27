@@ -41,3 +41,7 @@
 ## git push origin :old-branchName new-branchName
 
 重命名非当前分支以及非当前远程库
+
+## git reset --hard/soft/mixed
+
+--hard 会清空工作目录和暂存区的改动 --soft则会保留工作目录的内容，并把因为保留工作目录内容所带来的新的文件差异放进暂存区 --mixed（默认值）则会保留工作目录并清空暂存区
