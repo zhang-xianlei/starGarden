@@ -17,10 +17,17 @@
 </template>
 
 <script>
+import mixins from './mixins'
 export default {
     name: 'Home',
+    mixins: [mixins],
     data () {
-        return {}
+        return {
+            titile: 'print from vue',
+        }
+    },
+    mounted () {
+        this.print(this.title)
     },
 }
 </script>
