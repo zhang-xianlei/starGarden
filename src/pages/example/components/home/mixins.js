@@ -1,13 +1,15 @@
 export default {
     data () {
-        msg: 'hello world'
+        return {
+            msg: 'hello world'
+        }
     },
     created: function () {
-        console.log('print by mixin')
+        console.log('Printing from the Mixin')
     },
     methods: {
-        print: function () {
-            console.log(this.title)
+        print: function (msg) {
+            console.log(msg)
         }
     }
 }

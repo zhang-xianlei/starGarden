@@ -23,8 +23,11 @@ export default {
     mixins: [mixins],
     data () {
         return {
-            titile: 'print from vue',
+            title: 'print from vue',
         }
+    },
+    created () {
+        console.log(mixins)
     },
     mounted () {
         this.print(this.title)
